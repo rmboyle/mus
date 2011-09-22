@@ -1,0 +1,49 @@
+//*Irene*//
+
+Note n1 = new Note(E, 4, 4) ;
+Note n2 = new Note(G, 4, 4) ;
+Note n3 = new Note(B, 4, 4) ;
+Note n4 = new Note(D, 5, 4) ;
+Note n5 = new Note(F, 5, 4) ;
+
+
+//A
+Sequence s1 = new Sequence() ;
+
+Chord a1 = new Chord(n1,n2,n3,n4);
+Chord a2 = new Chord(n3,n5);
+
+s1 << a1 + a2 + a2 + a1 ;
+
+foreach(s1) < Color('blue');
+foreach(s1) < Shape('diamond');
+
+//H
+Sequence s2 = new Sequence() ;
+
+Chord h1 = new Chord(n1,n2,n3,n4,n5) ;
+Chord h2 = new Chord(n3) ;
+
+s2 << h1 + h2 + h2+ h1 ;
+
+foreach(s2) < Color('red');
+foreach(s2) < Shape('harmonic-black');
+
+
+//O
+Sequence s3 = new Sequence() ;
+
+Chord o1 = new Chord(n2,n3,n4) ;
+Chord o2 = new Chord(n1,n5);
+
+s3 << o1 + o2 + o2 + o1 ;
+
+foreach(s3) < Color('magenta');
+
+//
+
+Sequence s4 = new Sequence() ;
+s4 << s1 + s2 + s3 ;
+
+
+display(s4, "AHO") ;

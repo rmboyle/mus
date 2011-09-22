@@ -1,0 +1,120 @@
+//*Irene*//
+
+Note A2 = new Note(A, 5, 4) ;
+Note F2 = new Note(F#, 5, 2) ;
+Note E2 = new Note(E, 5, 2) ;
+Note D2 = new Note(D, 5, 2) ;
+Note C2 = new Note(C#, 5, 2) ;
+Note B2 = new Note(B, 4, 2) ;
+Note A = new Note(A, 4, 2) ;
+Note G = new Note(G, 4, 2) ;
+Note F = new Note(F#, 4, 2) ;
+Note E = new Note(E, 4, 2) ;
+Note D = new Note(D, 4, 4);
+Note B = new Note(B, 3, 4);
+
+Sequence s1 = new Sequence() ;
+s1 << F2 + E2 + D2 + C2 + B2 + A + B2 + C2 ;
+
+foreach(s1) < Color('magenta') ;
+foreach(s1) < Instrument('violin') ;
+foreach(s1) < Shape('petrucci');
+
+Sequence s2 = new Sequence() ;
+
+
+Chord c1 = new Chord(D2, F2) ;
+Chord c2 = new Chord(C2, E2) ;
+Chord c3 = new Chord(B2, D2) ;
+Chord c4 = new Chord(A, C2) ;
+Chord c5 = new Chord(G, B2) ;
+Chord c6 = new Chord(F, A) ;
+Chord c7 = new Chord(G, B2) ;
+Chord c8 = new Chord(E, C2) ;
+
+s2 << c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 ;
+
+F2^4 ;
+E2^4 ;
+D2^4 ;
+C2^4 ;
+B2^4 ;
+A^4 ;
+G^4 ;
+F^4 ;
+E^4 ;
+
+foreach(s2) < Color('blue') ;
+foreach(s2) < Instrument('rock organ') ;
+foreach(s2) < Shape('xcircle') ;
+
+Sequence s3 = new Sequence() ;
+
+
+c1 = new Chord(D, D2, F2) ;
+c2 = new Chord(F) ;
+c3 = new Chord(A, C2, E2) ;
+c4 = new Chord(G) ;
+c5 = new Chord(F, B2, D2) ;
+c6 = new Chord(D) ;
+c7 = new Chord(F, A, C2) ;
+c8 = new Chord(E) ;
+
+s3 << c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 ;
+
+c1 = new Chord(D, G, B2) ;
+c2 = new Chord(B) ;
+c3 = new Chord(D, F, A) ;
+c4 = new Chord(A) ;
+c5 = new Chord(G, G, B2) ;
+c6 = new Chord(B2) ;
+c7 = new Chord(A, E, C2) ;
+c8 = new Chord(G) ;
+
+foreach(s3) < Color('cyan') ;
+foreach(s3) < Instrument('bagpipe') ;
+foreach(s3) < Shape('triangle') ;
+
+
+Sequence s4 = new Sequence() ;
+
+s4 << c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 ;
+
+c1 = new Chord(F, D, D2) ;
+c2 = new Chord(D, F) ;
+c3 = new Chord(E, A, C2) ;
+c4 = new Chord(C2, G) ;
+c5 = new Chord(D2, F, B) ;
+c6 = new Chord(F2, D) ;
+c7 = new Chord(A2, F, A) ;
+c8 = new Chord(A, E) ;
+
+
+foreach(s4) < Color('red') ;
+foreach(s4) < Instrument('soprano sax') ;
+foreach(s4) < Shape('harmonic') ;
+
+
+Sequence s5 = new Sequence() ;
+
+s5 << c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 ;
+
+
+c1 = new Chord(B2, D, G) ;
+c2 = new Chord(G, B) ;
+c3 = new Chord(A, D, F) ;
+c4 = new Chord(F, A) ;
+c5 = new Chord(D, G, G) ;
+c6 = new Chord(D2, B2) ;
+c7 = new Chord(D2, A, E) ;
+c8 = new Chord(C2, G) ;
+
+s5 << c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 ;
+foreach(s5) < Color('green') ;
+foreach(s5) < Instrument('acoustic grand');
+
+Sequence s6 = new Sequence() ;
+
+s6 << s1 + s2 + s3 + s4 + s5;
+
+display(s6, "Pachelbel Canon") ;

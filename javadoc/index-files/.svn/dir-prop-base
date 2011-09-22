@@ -1,0 +1,11 @@
+K 15
+javadocProperty
+V 198
+enable-auto-props = yes
+[auto-props]
+*.txt = svn:mime-type=text/plain
+*.html = svn:mime-type=text/html
+*.css = svn:mime-type=text/css
+*.png = svn:mime-type=image/png
+*.jpg = svn:mime-type=image/jpeg
+END

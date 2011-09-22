@@ -1,0 +1,39 @@
+//*Farbound*//
+//a note can have a color attribute
+Note note1 = new Note(C, 4, 8);
+Sequence sequence = new Sequence() ;
+
+//is supported by the following colors
+note1 < Color('black');
+sequence << note1 ;
+note1 < Color('darkyellow');
+sequence << note1 ;
+note1 < Color('green');
+sequence << note1 ;
+note1 < Color('red');
+sequence << note1 ;
+note1 < Color('white');
+sequence << note1 ;
+note1 < Color('yellow');
+sequence << note1 ;
+note1 < Color('darkred');
+sequence << note1 ;
+note1 < Color('darkgreen');
+sequence << note1 ;
+note1 < Color('grey');
+sequence << note1 ;
+note1 < Color('cyan');
+sequence << note1 ;
+note1 < Color('blue');
+sequence << note1 ;
+note1 < Color('darkblue');
+sequence << note1 ;
+note1 < Color('darkmagenta');
+sequence << note1 ;
+note1 < Color('darkcyan');
+sequence << note1 ;
+note1 < Color('magenta');
+sequence << note1 ;
+
+
+display(sequence, "Testing Note Colors") ;

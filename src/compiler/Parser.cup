@@ -1,0 +1,308 @@
+//*Irene &  Richard*//
+
+package lexer;
+
+import java_cup.runtime.*;
+import lilypond.*;
+import java.util.ArrayList;
+
+
+
+
+action code {: 
+
+	ParseTree tree = new ParseTree() ;
+
+ :};
+
+parser code {:
+
+:};
+	
+	terminal STRING_TEXT, ID ;
+	terminal NEW, ASSIGN;
+	terminal COLOR,SHAPE, INSTRUMENT;
+	terminal NOTE, CHORD, SEQUENCE;
+	terminal COMMA, SEMICOLON, COLON ;
+		
+	terminal PLUS ;
+	terminal DIGIT;
+	
+	terminal LPAREN, RPAREN, LBRACK, RBRACK ;
+	terminal LTHAN, GTHAN ;
+	
+	terminal ADD_TO_SEQUENCE, CHANGE_DURATION, FOREACH, DISPLAY ;
+
+non terminal 	expr_list, expr_part ;
+non terminal	note, chord, sequence ;
+non terminal 	assign, var ;
+non terminal 	add_to_sequence, concat_seq, display, change_duration, chord_in_seq, note_in_seq, sub_seq ;
+non terminal 	list_variables, list_notes, list_chords ;
+
+non terminal 	foreach ;
+
+non terminal 	object_types, functions ;
+
+precedence left PLUS;
+
+start with expr_list ;
+
+expr_list ::= expr_part expr_list | expr_part ;
+
+expr_part ::=  functions | object_types | assign |  var ;
+
+object_types ::= note | chord | sequence ;
+functions ::= add_to_sequence | concat_seq SEMICOLON | display | change_duration | chord_in_seq SEMICOLON | note_in_seq SEMICOLON | sub_seq SEMICOLON ;
+
+//*Irene*//
+
+note ::= NOTE ID:name ASSIGN NEW NOTE LPAREN ID:pitch COMMA DIGIT:octave COMMA DIGIT:duration RPAREN SEMICOLON
+	{:
+			tree.NOTE((String) name, (String) pitch, (Integer) octave, (Integer) duration) ;
+	:}
+	|NOTE ID:name SEMICOLON
+	{:
+		tree.NOTE((String) name);
+	:}
+	|ID:name ASSIGN NEW NOTE LPAREN ID:pitch COMMA DIGIT:octave COMMA DIGIT:duration RPAREN SEMICOLON
+	{:
+		tree.INITIALIZE_NOTE((String) name, (String) pitch, (Integer) octave, (Integer) duration) ;
+	:}
+	;
+
+list_notes ::= ID:name1 COMMA list_notes:name2
+	{:
+		RESULT = tree.MULT_NOTES((String) name1, (Chord) name2) ;			
+	:}
+	|
+	ID:name
+	{:
+		RESULT = tree.ONE_NOTE((String) name) ;
+	:}	
+	;
+			
+chord ::= CHORD ID:name ASSIGN NEW CHORD LPAREN list_notes:notes RPAREN SEMICOLON
+	{:
+		tree.CHORD((String) name, (Chord) notes) ;
+	:}
+	|CHORD ID:name SEMICOLON
+	{:
+		tree.CHORD((String) name);
+	:}
+	|ID:name ASSIGN NEW CHORD LPAREN list_notes:notes RPAREN SEMICOLON
+	{:
+		tree.INITIALIZE_CHORD((String) name, (Chord) notes) ;
+	:}
+	;
+
+list_chords ::= DIGIT:name1 COMMA list_chords:name2
+	{:
+		RESULT = tree.MULT_CHORDS((Integer)name1, (String)name2);
+	:}
+	|DIGIT:name
+	{:
+		RESULT = tree.ONE_CHORDS((Integer)name);
+	:} 
+	;
+
+sequence ::= SEQUENCE ID:name ASSIGN NEW SEQUENCE LPAREN RPAREN SEMICOLON
+	{:
+		tree.SEQUENCE((String) name) ;	
+	:}
+	|SEQUENCE ID:name SEMICOLON
+	{:
+		tree.SEQ((String) name);
+	:}
+	;	
+
+add_to_sequence ::= ID:sequence ADD_TO_SEQUENCE list_variables:variable_list SEMICOLON
+	{:
+		tree.ADD_TO_SEQUENCE((String) sequence, (ArrayList<Object>) variable_list) ;
+	:}
+	;		
+	
+//*Richard*//
+	
+chord_in_seq ::= ID:name1 LPAREN DIGIT:num RPAREN
+	{:
+		RESULT = tree.CHORD_IN_SEQ((String)name1, (Integer) num);
+	:}
+	;
+	
+note_in_seq ::= ID:name1 LTHAN DIGIT:num_chord COMMA DIGIT:num_note GTHAN
+	{:
+		RESULT = tree.NOTE_IN_SEQ((String)name1, (Integer) num_chord, (Integer)num_note);
+	:}
+	;
+	
+sub_seq ::= ID:name LBRACK DIGIT:num1 COLON DIGIT:num2 RBRACK
+	{:
+		RESULT = tree.SUB_SEQ((String)name,(Integer) num1,(Integer) num2);
+	:}
+	| ID:name LBRACK list_chords:chordlist RBRACK
+	{:
+		RESULT = tree.SUB_SET((String)name, (String) chordlist);
+	:}
+	;
+	
+concat_seq ::= LBRACK ID:s1 COMMA ID:s2 RBRACK
+	{:
+		RESULT = tree.CONCAT_SEQ((String) s1, (String)s2);
+	:}
+	;
+	
+//*Irene*//
+		
+list_variables ::= ID:name1 PLUS list_variables:variable_list
+	{:
+		RESULT = tree.MULT_VARIABLES((String) name1, (ArrayList<Object>) variable_list) ;			
+	:}
+	|
+	ID:name
+	{:
+		RESULT = tree.ONE_VARIABLE((String) name) ;
+	:}
+	|
+	sub_seq:name1 PLUS list_variables:variable_list
+	{:	
+		RESULT = tree.MULT_VARIABLE_N((Object) name1, (ArrayList<Object>) variable_list) ;			
+		
+	:}
+	|
+	sub_seq:name
+	{:
+		RESULT = tree.ONE_VARIABLE_N((Object) name) ;
+	:}
+	|
+	concat_seq:name1 PLUS list_variables:variable_list
+	{:	
+		RESULT = tree.MULT_VARIABLE_N((Object) name1, (ArrayList<Object>) variable_list) ;			
+	:}
+	|
+	concat_seq:name
+	{:
+		RESULT = tree.ONE_VARIABLE_N((Object) name) ;
+	:}
+	|
+	chord_in_seq:name1 PLUS list_variables:variable_list
+	{:	
+		RESULT = tree.MULT_VARIABLE_N((Object) name1, (ArrayList<Object>) variable_list) ;			
+	:}
+	|
+	chord_in_seq:name
+	{:
+		RESULT = tree.ONE_VARIABLE_N((Object) name) ;
+	:}	
+	|
+	note_in_seq:name1 PLUS list_variables:variable_list
+	{:	
+		RESULT = tree.MULT_VARIABLE_N((Object) name1, (ArrayList<Object>) variable_list) ;					
+	:}
+	|
+	note_in_seq:name
+	{:
+		RESULT = tree.ONE_VARIABLE_N((Object) name) ;
+	:}		
+	;	
+		
+//*Richard*//
+
+assign ::= ID:name LTHAN COLOR LPAREN STRING_TEXT:attribute RPAREN SEMICOLON
+	{:			
+		tree.ATTRIBUTE_COLOR((String) name, (String) attribute);
+	:}	
+	|ID:name LTHAN INSTRUMENT LPAREN STRING_TEXT:attribute RPAREN SEMICOLON
+	{:
+		tree.ATTRIBUTE_INSTRUMENT((String) name, (String) attribute);
+	:}	
+	|ID:name LTHAN SHAPE LPAREN STRING_TEXT:attribute RPAREN SEMICOLON
+	{:
+		tree.ATTRIBUTE_SHAPE((String) name, (String) attribute);
+	:}
+	| foreach:name LTHAN COLOR LPAREN STRING_TEXT:attribute RPAREN SEMICOLON
+	{:
+		tree.FOREACH_COLOR((String) name,(String)attribute);
+	:}
+	| foreach:name  LTHAN SHAPE LPAREN STRING_TEXT:attribute RPAREN SEMICOLON
+	{:
+		tree.FOREACH_SHAPE((String) name,(String) attribute);
+	:}
+	| foreach:name  LTHAN INSTRUMENT LPAREN STRING_TEXT:attribute RPAREN SEMICOLON
+	{:
+		tree.FOREACH_INSTRUMENT((String) name,(String) attribute);
+	:}
+	;
+	
+
+		
+var ::= NOTE ID:name1 ASSIGN ID:name2 SEMICOLON
+	{:
+		tree.ASSIGN_VAR_NOTE((String) name1, (String)name2, true);
+	:}
+	| CHORD ID:name1 ASSIGN ID:name2 SEMICOLON
+	{:
+		tree.ASSIGN_VAR_CHORD((String) name1, (String)name2, true);
+	:}
+	| SEQUENCE ID:name1 ASSIGN ID:name2 SEMICOLON
+	{:
+		tree.ASSIGN_VAR_SEQ((String) name1, (String)name2, true);
+	:}
+	| ID:name1 ASSIGN ID:name2 SEMICOLON
+	{:
+		tree.ASSIGN_VAR((String) name1, (String)name2);
+	:}
+	| CHORD ID:name1 ASSIGN chord_in_seq:name2 SEMICOLON
+	{:
+		tree.ASSIGN_VAR_CHORD((String) name1, (Chord) name2, true);
+	:}
+	| NOTE ID:name1 ASSIGN note_in_seq:name2 SEMICOLON
+	{:
+		tree.ASSIGN_VAR_NOTE((String) name1, (Note)name2, true);
+	:}
+	| SEQUENCE ID:name1 ASSIGN sub_seq:name2 SEMICOLON
+	{:
+		tree.ASSIGN_VAR_SEQ((String) name1, (Sequence)name2, true);
+	:}
+	| ID:name1 ASSIGN chord_in_seq:name2 SEMICOLON
+	{:
+		tree.ASSIGN_VAR_CHORD((String) name1, (Chord)name2, false);
+	:}
+	| ID:name1 ASSIGN note_in_seq:name2 SEMICOLON
+	{:
+		tree.ASSIGN_VAR_NOTE((String) name1, (Note)name2, false);
+	:}
+	| ID:name1 ASSIGN sub_seq:name2 SEMICOLON
+	{:
+		tree.ASSIGN_VAR_SEQ((String) name1, (Sequence)name2,false);
+	:}
+	| ID:name1 ASSIGN concat_seq:name2 SEMICOLON
+	{:
+		tree.ASSIGN_VAR_SEQ((String) name1, (Sequence)name2,false);
+	:}
+	| SEQUENCE ID:name1 ASSIGN concat_seq:name2 SEMICOLON
+	{:
+		tree.ASSIGN_VAR_SEQ((String) name1, (Sequence)name2, true);
+	:}
+	;
+
+//*Jonathan*//
+				
+foreach ::= FOREACH LPAREN ID:name RPAREN
+	{:
+			RESULT = name ;
+	:}
+	;	
+				
+change_duration ::= ID:name CHANGE_DURATION DIGIT:num SEMICOLON
+	{:
+		tree.CHANGE_DURATION((String) name, (Integer) num); 
+	:}
+	;
+	
+
+display ::= DISPLAY LPAREN ID:name COMMA STRING_TEXT:header RPAREN SEMICOLON
+	{:
+		tree.DISPLAY((String) name, (String) header) ;
+	:}
+	;
+

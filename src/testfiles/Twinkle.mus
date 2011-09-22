@@ -1,0 +1,48 @@
+//*Richard*//
+
+//Twinkle Twinkle Little Star
+
+Note C = new Note(C, 4, 4) ;
+C<Shape('triangle');
+
+Note D = new Note(D, 4, 4) ;
+D<Shape('cross');
+
+Note E = new Note(E, 4, 4) ;
+E<Shape('diamond');
+
+Note F = new Note(F, 4, 4) ;
+F<Shape('xcircle');
+
+Note G = new Note(G, 4, 4) ;
+G<Shape('baroque');
+
+Note A = new Note(A, 4, 4) ;
+A<Shape('petrucci');
+
+Note Ghalf = new Note(G, 4, 2);
+Ghalf<Shape('baroque');
+
+Note Chalf = new Note(C, 4, 2);
+Chalf<Shape('triangle');
+
+Note Dhalf = new Note(D, 4, 2);
+Dhalf<Shape('cross');
+
+Sequence sequence1 = new Sequence();
+sequence1 << C + C + G + G + A + A + Ghalf;
+foreach(sequence1)<Color('green');
+
+Sequence sequence2 = new Sequence();
+sequence2 << F + F + E + E + D + D + Chalf;
+foreach(sequence2)<Color('blue');
+
+Sequence sequence3 = new Sequence();
+sequence3 << G + G + F + F + E + E + Dhalf;
+foreach(sequence3)<Color('red');
+
+Sequence everything = new Sequence();
+everything<<sequence1 + sequence2 + sequence3 + sequence3 + sequence1+ sequence2;
+
+
+display(everything, "Twinkle Twinkle Little *") ;

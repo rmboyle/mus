@@ -1,0 +1,4 @@
+//*Irene*//
+
+Sequence sequence1 = new Sequence() ;
+display(sequence1, "Hello World!") ;

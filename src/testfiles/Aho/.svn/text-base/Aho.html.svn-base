@@ -1,0 +1,17 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- header_tag -->
+ <html>
+ <body> 
+ AHO
+<p>
+ <a href="a8/lily-983d9e22.ly">
+  <img align="middle"
+       border="0"
+       src="a8/lily-983d9e22.png"
+       alt="[image of music]">
+ </a>
+</p>
+<embed src="Aho.midi" width="140" height="40" autostart="false" loop="FALSE"> </embed>
+
+</body>
+</html>

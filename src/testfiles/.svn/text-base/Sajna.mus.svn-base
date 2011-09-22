@@ -1,0 +1,152 @@
+Note e = new Note(E, 4, 8) ;
+Note g = new Note(G, 4, 8) ;
+Note a = new Note(A, 4, 8) ;
+Note b = new Note(B, 4, 8) ;
+Note c = new Note(C, 5, 8);
+Note d = new Note(D, 5, 8) ;
+Note e2 = new Note(E, 5, 2) ;
+Note fS = new Note(F#, 5, 16) ;
+Note g2 = new Note(G, 5, 16) ;
+
+Note dS = new Note(D#, 5, 2) ;
+
+Sequence s1 = new Sequence() ;
+
+//Intro 
+
+s1 << g + g + g + g + g + b ;
+b^4 ;
+s1 << b ; 
+b^8;
+
+s1 << g + g + g + g + g + g ;
+g^4 ;
+s1 << g ;
+g^8 ;
+
+s1 << g + g + g + g + g ;
+g^16 ;
+s1 << g + g ;
+g^8 ;
+s1 << a + b ;
+
+b^2 ;
+s1 << b ;
+b^8 ;
+
+a^2 ;
+s1 << a ;
+a^8 ;
+
+////
+
+s1 << g + g + g + g + g + b ;
+b^4 ;
+s1 << b ; 
+b^8;
+
+s1 << g + g + g + g + g + a ;
+e^4 ;
+s1 << e ;
+e^8 ;
+
+s1 << g + g + g + g + g + g + a + b ;
+
+b^16 ; a^16 ; g^16;
+s1 << b + a + g + a ;
+b^8 ; a^4 ; g^8 ;
+s1 << a ;
+a^2 ;
+s1 << a ;
+a^8 ;
+
+foreach(s1) < Color('blue');
+
+//// Chorus
+Sequence s2 = new Sequence() ;
+
+
+s2 << b + a ;
+b^4 ;
+s2 << b + a + g + b ;
+
+s2 << a + g + b ;
+b^2;
+s2 << b ;
+b^8 ;
+
+s2 << c + b ;
+c^4 ;
+s2 << c + b + a ;
+b^4 ;
+s2 << b ;
+c^8;
+
+s2 << a + g + b ;
+b^2 ;
+s2 << b ;
+b^8;
+
+////
+
+s2 << b + a ;
+b^4 ;
+s2 << b + a + g + b ;
+
+s2 << a + g + b ;
+b^2;
+s2 << b ;
+b^8 ;
+
+s2 << c + b ;
+c^4 ;
+s2 << c + b + a ;
+b^4 ;
+s2 << b ;
+c^8;
+
+s2 << a + g + b ;
+b^8;
+s2 << b + d + a + g;
+
+foreach(s2) < Color('magenta') ;
+s1 << s2 ;
+
+
+//Other segment 1 
+Sequence s3 = new Sequence() ;
+
+g^2 ; a^2 ;
+s3<< a + g ;
+g^8; a^8 ;
+
+s3 << fS + g2 + d + d + b ;
+b^4;
+s3 << b ;
+b^8;
+s3 << a + g ;
+
+foreach(s3) < Color('red') ;
+
+s1 << s3 + s3 ;
+
+
+//Other segment 2
+Sequence s4 = new Sequence() ;
+
+s4 << dS + e2 ;
+
+s4 << b + a + b + a + d + c ;
+c^4 ;
+s4 << c ;
+
+//Finale
+d^2 ;
+g^1 ;
+s4 << d + d + g + d + d + g ;
+
+foreach(s4) < Color('green') ;
+
+s1 << s4 ;
+
+display(s1, "Sajna") ;

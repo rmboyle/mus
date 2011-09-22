@@ -1,0 +1,17 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- header_tag -->
+ <html>
+ <body> 
+ Testing built-in functions
+<p>
+ <a href="f7/lily-2f523b75.ly">
+  <img align="middle"
+       border="0"
+       src="f7/lily-2f523b75.png"
+       alt="[image of music]">
+ </a>
+</p>
+<embed src="BuiltinFunctions.midi" width="140" height="40" autostart="false" loop="FALSE"> </embed>
+
+</body>
+</html>

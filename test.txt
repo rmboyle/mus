@@ -1,0 +1,60 @@
+Note C = new Note(C, 4, 4) ;
+Note D = new Note(D, 4, 4) ;
+Note E = new Note(E, 4, 4) ;
+Note F = new Note(F, 4, 4) ;
+Note G = new Note(G, 4, 4) ;
+Note A = new Note(A, 4, 4) ;
+
+//Chord chord1 = new Chord(n1, n2, n3) ;
+//Chord chord2 = new Chord(n1, n3) ;
+
+C < Color('red') ;
+C < Instrument('harmonica') ;
+G < Color('red') ;
+G < Instrument('applause') ;
+A < Color('red') ;
+A < Instrument('fx 8 (sci-fi)');
+
+Sequence sequence1 = new Sequence();
+sequence1 << C + C + G + G + A + A ;
+
+G^2 ;
+sequence1 << G ;
+G^4 ;
+
+////
+F < Color('green') ;
+F < Instrument('alto sax') ;
+E < Color('green') ;
+D < Color('green') ;
+C < Color('green') ;
+
+F < Shape('triangle') ;
+E < Shape('triangle') ;
+D < Shape('triangle') ;
+C < Shape('triangle') ;
+
+C^2;
+
+sequence1 << F + F + E + E + D + D + C ;
+
+////
+G < Color('blue') ;
+F < Color('blue') ;
+E < Color('blue') ;
+D < Color('blue') ;
+
+G < Shape('cross') ;
+F < Shape('cross') ;
+E < Shape('cross') ;
+D < Shape('cross') ;
+
+D^2;
+
+sequence1 << G + G + F + F + E + E + D ;
+sequence1 << sequence1 ;
+
+display(sequence1, "a test") ;
+
+
+

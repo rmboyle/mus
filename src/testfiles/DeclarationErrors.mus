@@ -1,0 +1,11 @@
+//*Jonathan*//
+
+Note n1;
+Chord c1; // Chord c1 declared but not initialized.
+Note n2 = n1; //Error: Variable n1 has not been initialized
+n3 = new Note(D, 4, 2);
+Note n4 = new Note(D, 4, 2);
+Chord c2 = new Chord(n1); //Error: Variable n1 has not been initialized.
+Chord c3 = new Chord(n4);
+c3^4; //Error: The ^ operator isn't defined for type lilypond.Chord
+c3<Color('darkcyan'); //Error: The < operator isn't defined for type lilypond.Chord

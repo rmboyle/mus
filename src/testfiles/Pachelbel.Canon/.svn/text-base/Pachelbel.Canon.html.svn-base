@@ -1,0 +1,19 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- header_tag -->
+ <html>
+ <body> 
+ Pachelbel Canon
+<p>
+ <a href="21/lily-bc062d2b.ly">
+  <img align="middle"
+       border="0"
+       src="21/lily-bc062d2b.png"
+       alt="[image of music]">
+ </a>
+</p>
+<embed src="Pachelbel.Canon.midi" width="140" height="40" autostart="false" loop="FALSE"> </embed>
+
+
+
+</body>
+</html>
